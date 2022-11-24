@@ -3,9 +3,9 @@ SOLUTION
 
 Estimation
 ----------
-Estimated: n hours
+Estimated: 3 hours
 
-Spent: x hours
+Spent: 3 hours 42 mins
 
 
 Solution

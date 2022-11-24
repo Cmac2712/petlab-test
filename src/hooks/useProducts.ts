@@ -8,6 +8,8 @@ export interface Product {
   id: number;
   slug: string;
   title: string;
+  image_src: string;
+  price: number;
   vendor: string;
   tags: string[];
 }
@@ -27,7 +29,7 @@ const useProducts = () => {
   const { animal, price, subscription } = searchParams || {
     animal: null,
     price: null,
-    subscription: null,
+    subscription: "All",
   };
   const buildURI = useCallback(() => {
     let fetchURL = `${import.meta.env.VITE_API_ENDPOINT}/products?`;
@@ -39,7 +41,7 @@ const useProducts = () => {
       }`;
     }
 
-    fetchURL += `&price_lte=${price}`;
+    if (price !== null) fetchURL += `&price_lte=${price}`;
 
     return fetchURL;
   }, [animal, price, subscription]);
