@@ -18,8 +18,9 @@ import {
 const SliderPrice = ({ defaultPrice }: { defaultPrice: number }) => {
   return (
     <FormControl id="price" mb={5}>
-      <FormLabel>Price</FormLabel>
+      <FormLabel htmlFor="price-range">Price</FormLabel>
       <input
+        id="price-range"
         type="range"
         min={0}
         max={200}
