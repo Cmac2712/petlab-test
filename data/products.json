@@ -179,6 +179,21 @@
       "price": 42.29,
       "subscription_discount": 25,
       "subscription": true
+    },
+    {
+      "id": 13,
+      "slug": "random-product",
+      "title": "Random Product",
+      "vendor": "PetLab",
+      "tags": ["Formula", "Cat"],
+      "published": false,
+      "url": "https://www.thepetlabco.com/products/cat-eye-cleaner",
+      "image_src": "https://via.placeholder.com/300x300.png?text=Clear+Eyes+Cats",
+      "option_value": "Single Pack",
+      "sku": "TSC1",
+      "price": 42.29,
+      "subscription_discount": 25,
+      "subscription": true
     }
   ]
 }

@@ -1,23 +1,16 @@
 import { useState } from "react";
-import type { Subscription, Animal, SearchParams } from "../hooks/useProducts";
-import { useQueryParam } from "../hooks/useQueryParam";
+import type { Subscription, Animal } from "../hooks/useProducts";
 import {
   Heading,
   Radio,
   RadioGroup,
   Stack,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderMark,
   FormControl,
   FormLabel,
 } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
 
 const SliderPrice = () => {
-  //const [price, setPrice] = useQueryParam("price");
   const [params, setParams] = useSearchParams();
   const [price, setPrice] = useState(200);
 
@@ -33,7 +26,7 @@ const SliderPrice = () => {
         name="price"
         defaultValue={params.get("price") || 200}
         onChange={(e) => {
-          setPrice(e.target.value);
+          setPrice(parseInt(e.target.value));
         }}
         onMouseUp={(e) => {
           setParams({
@@ -48,7 +41,6 @@ const SliderPrice = () => {
 };
 
 const RadioAnimal = () => {
-  //const [animal, setAnimal] = useQueryParam<Animal>("tag");
   const [params, setParams] = useSearchParams();
 
   return (
@@ -81,7 +73,6 @@ const RadioAnimal = () => {
 };
 
 const RadioSubscription = () => {
-  //const [sub, setSub] = useQueryParam<Subscription>("subscription");
   const [params, setParams] = useSearchParams();
 
   return (

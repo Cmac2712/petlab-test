@@ -1,9 +1,8 @@
 import { ProductsCollection } from "./components/ProductsCollection";
 import { Filter } from "./components/Filter";
+import { Pagination } from "./components/Pagination";
 import "./App.css";
 import { ChakraProvider, Flex, Center, Text, Box } from "@chakra-ui/react";
-
-type Animals = "cat" | "dog";
 
 function App() {
   return (
@@ -24,11 +23,13 @@ function App() {
         </Center>
         <Center
           flexBasis={"auto"}
+          flexDirection={"column"}
           overflow={"scroll"}
           padding={20}
           margin={"0 auto"}
         >
           <ProductsCollection />
+          <Pagination />
         </Center>
       </Flex>
     </ChakraProvider>

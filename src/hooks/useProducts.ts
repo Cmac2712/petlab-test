@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useCallback, useState } from "react";
-//@ts-ignore
-//import { useQueryParam } from "./useQueryParam";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export type Subscription = "On" | "Off" | "All";
 
@@ -25,21 +23,11 @@ export interface SearchParams {
 
 const useProducts = () => {
   const [products, setProducts] = useState<Product[] | []>([]);
-  // const [searchParams, setSearchParams] =
-  //   useQueryParam<SearchParams>("filters");
-  // const { animal, price, subscription } = searchParams || {
-  //   animal: null,
-  //   price: null,
-  //   subscription: "All",
-  // };
   const [searchParams, setSearchParams] = useSearchParams();
   const tag = searchParams.get("tag");
   const price = searchParams.get("price");
   const subscription = searchParams.get("subscription");
-
-  console.log("tag", tag);
-  console.log("price", price);
-  console.log("subscription", subscription);
+  const page = searchParams.get("_page");
 
   const buildURI = useCallback(() => {
     let fetchURL = `${import.meta.env.VITE_API_ENDPOINT}/products?`;
@@ -53,15 +41,17 @@ const useProducts = () => {
 
     if (price !== null) fetchURL += `&price_lte=${price}`;
 
+    fetchURL += `&_page=${page || "1"}&_limit=12`;
+
     return fetchURL;
-  }, [tag, price, subscription]);
+  }, [tag, price, subscription, page]);
 
   useEffect(() => {
     const fetchURL = buildURI();
     fetch(fetchURL)
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, [tag, price, subscription]);
+  }, [tag, price, subscription, page]);
 
   return { products };
 };
