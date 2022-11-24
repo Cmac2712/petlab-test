@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useCallback, useState } from "react";
 //@ts-ignore
-import { useQueryParam } from "./useQueryParam";
+//import { useQueryParam } from "./useQueryParam";
+import { useParams, useSearchParams } from "react-router-dom";
 
 export type Subscription = "On" | "Off" | "All";
 
@@ -31,15 +32,20 @@ const useProducts = () => {
   //   price: null,
   //   subscription: "All",
   // };
-  const [tag] = useQueryParam<Animal[] | "All">("tag");
-  const [price] = useQueryParam<number>("price");
-  const [subscription] = useQueryParam<Subscription>("subscription");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tag = searchParams.get("tag");
+  const price = searchParams.get("price");
+  const subscription = searchParams.get("subscription");
+
+  console.log("tag", tag);
+  console.log("price", price);
+  console.log("subscription", subscription);
 
   const buildURI = useCallback(() => {
     let fetchURL = `${import.meta.env.VITE_API_ENDPOINT}/products?`;
     if (tag && tag !== "All") fetchURL += `&tags_like=${tag}`;
 
-    if (subscription !== "All") {
+    if (subscription && subscription !== "All") {
       fetchURL += `&subscription_like=${
         subscription === "On" ? "true" : "false"
       }`;
