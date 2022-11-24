@@ -16,6 +16,8 @@ import {
 } from "@chakra-ui/react";
 
 const SliderPrice = ({ defaultPrice }: { defaultPrice: number }) => {
+  const [price, setPrice] = useQueryParam("price");
+
   return (
     <FormControl id="price" mb={5}>
       <FormLabel htmlFor="price-range">Price</FormLabel>
@@ -27,13 +29,15 @@ const SliderPrice = ({ defaultPrice }: { defaultPrice: number }) => {
         step={5}
         name="price"
         defaultValue={defaultPrice}
+        onMouseUp={(e) => setPrice(e.target?.value)}
       />
     </FormControl>
   );
 };
 
 const RadioAnimal = () => {
-  const [animal, setAnimal] = useState<Animal>("All");
+  //const [animal, setAnimal] = useState<Animal>("All");
+  const [animal, setAnimal] = useQueryParam<Animal>("tag");
   return (
     <FormControl as="fieldset" mb={5}>
       <FormLabel as="legend">Tags</FormLabel>
@@ -60,7 +64,13 @@ const RadioAnimal = () => {
 };
 
 const RadioSubscription = () => {
-  const [sub, setSub] = useState<Subscription>("All");
+  //const [sub, setSub] = useState<Subscription>("All");
+  const [sub, setSub] = useQueryParam<Subscription>("subscription");
+
+  {
+    console.log("SUB", sub);
+  }
+
   return (
     <FormControl as="fieldset">
       <FormLabel>Subscription</FormLabel>
@@ -87,13 +97,14 @@ const RadioSubscription = () => {
 };
 
 const Filter = () => {
-  let [filters, setFilters] = useQueryParam<SearchParams>("filters");
+  // let [filters, setFilters] = useQueryParam<SearchParams>("filters");
 
-  if (!filters) {
-    filters = { animal: ["All"], price: 200, subscription: "All" };
-  }
+  // if (!filters) {
+  //   filters = { animal: ["All"], price: 200, subscription: "All" };
+  // }
 
   const handleChange = (event: React.ChangeEvent<HTMLFormElement>) => {
+    return;
     const form = event.currentTarget;
     const formData = new FormData(form);
 
@@ -113,7 +124,7 @@ const Filter = () => {
           Filters
         </Heading>
         <RadioAnimal />
-        <SliderPrice defaultPrice={filters.price} />
+        <SliderPrice />
         <RadioSubscription />
       </form>
     </div>

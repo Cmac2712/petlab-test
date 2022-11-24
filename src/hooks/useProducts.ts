@@ -24,16 +24,20 @@ export interface SearchParams {
 
 const useProducts = () => {
   const [products, setProducts] = useState<Product[] | []>([]);
-  const [searchParams, setSearchParams] =
-    useQueryParam<SearchParams>("filters");
-  const { animal, price, subscription } = searchParams || {
-    animal: null,
-    price: null,
-    subscription: "All",
-  };
+  // const [searchParams, setSearchParams] =
+  //   useQueryParam<SearchParams>("filters");
+  // const { animal, price, subscription } = searchParams || {
+  //   animal: null,
+  //   price: null,
+  //   subscription: "All",
+  // };
+  const [tag] = useQueryParam<Animal[] | "All">("tag");
+  const [price] = useQueryParam<number>("price");
+  const [subscription] = useQueryParam<Subscription>("subscription");
+
   const buildURI = useCallback(() => {
     let fetchURL = `${import.meta.env.VITE_API_ENDPOINT}/products?`;
-    if (animal && animal[0] !== "All") fetchURL += `&tags_like=${animal}`;
+    if (tag && tag !== "All") fetchURL += `&tags_like=${tag}`;
 
     if (subscription !== "All") {
       fetchURL += `&subscription_like=${
@@ -44,16 +48,16 @@ const useProducts = () => {
     if (price !== null) fetchURL += `&price_lte=${price}`;
 
     return fetchURL;
-  }, [animal, price, subscription]);
+  }, [tag, price, subscription]);
 
   useEffect(() => {
     const fetchURL = buildURI();
     fetch(fetchURL)
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, [animal, price, subscription]);
+  }, [tag, price, subscription]);
 
-  return { products, searchParams, setSearchParams };
+  return { products };
 };
 
 export { useProducts };

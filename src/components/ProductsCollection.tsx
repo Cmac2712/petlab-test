@@ -1,17 +1,11 @@
 import { useProducts } from "../hooks/useProducts";
 import {
   Box,
-  List,
-  ListItem,
   Text,
   Table,
-  Thead,
   Tbody,
-  Tfoot,
   Tr,
-  Th,
   Td,
-  TableCaption,
   TableContainer,
   Image,
 } from "@chakra-ui/react";
@@ -29,7 +23,7 @@ const ProductsCollection = () => {
           <Tbody>
             {products.length
               ? products.map((product) => (
-                  <Tr>
+                  <Tr key={`product-id-${product?.id}`}>
                     <Td>
                       <Image
                         boxSize={"50px"}
