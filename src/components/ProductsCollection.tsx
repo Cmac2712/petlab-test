@@ -46,4 +46,4 @@ const ProductsCollection = () => {
   );
 };
 
-export { ProductsCollection };
+export default ProductsCollection;

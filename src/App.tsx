@@ -1,8 +1,18 @@
-import { ProductsCollection } from "./components/ProductsCollection";
+import { lazy, Suspense } from "react";
 import { Filter } from "./components/Filter";
 import { Pagination } from "./components/Pagination";
 import "./App.css";
-import { ChakraProvider, Flex, Center, Text, Box } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  Flex,
+  Center,
+  Text,
+  Box,
+  Spinner,
+} from "@chakra-ui/react";
+const ProductsCollection = lazy(
+  () => import("./components/ProductsCollection")
+);
 
 function App() {
   return (
@@ -41,7 +51,9 @@ function App() {
           padding={20}
           margin={"0 auto"}
         >
-          <ProductsCollection />
+          <Suspense fallback={<Spinner />}>
+            <ProductsCollection />
+          </Suspense>
           <Pagination />
         </Center>
       </Flex>

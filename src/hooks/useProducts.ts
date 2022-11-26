@@ -23,7 +23,7 @@ export interface SearchParams {
 
 const useProducts = () => {
   const [products, setProducts] = useState<Product[] | []>([]);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const tag = searchParams.get("tag");
   const price = searchParams.get("price");
   const subscription = searchParams.get("subscription");
@@ -48,9 +48,14 @@ const useProducts = () => {
 
   useEffect(() => {
     const fetchURL = buildURI();
-    fetch(fetchURL)
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
+    const productsPromise = new Promise<void>((resolve) => {
+      fetch(fetchURL)
+        .then((res) => res.json())
+        .then((data) => {
+          setProducts(data);
+          resolve();
+        });
+    });
   }, [tag, price, subscription, page]);
 
   return { products };
