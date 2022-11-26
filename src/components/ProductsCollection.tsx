@@ -1,4 +1,5 @@
 import { useProducts } from "../hooks/useProducts";
+import { Spinner } from "@chakra-ui/react";
 import {
   Box,
   Text,
@@ -12,6 +13,10 @@ import {
 
 const ProductsCollection = () => {
   const { products } = useProducts();
+
+  if (!products) {
+    return <Spinner />;
+  }
 
   return (
     <Box>
@@ -34,7 +39,7 @@ const ProductsCollection = () => {
                     </Td>
                     <Td width={500}>{product?.title}</Td>
                     <Td>
-                      <Text as="b">£{product?.price}</Text>
+                      <Text as="b">£{product?.price.toFixed(2)}</Text>
                     </Td>
                   </Tr>
                 ))

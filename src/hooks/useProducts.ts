@@ -29,9 +29,12 @@ const useProducts = () => {
   const subscription = searchParams.get("subscription");
   const page = searchParams.get("_page");
 
-  const buildURI = useCallback(() => {
+  const buildURL = useCallback(() => {
     let fetchURL = `${import.meta.env.VITE_API_ENDPOINT}/products?`;
-    if (tag && tag !== "All") fetchURL += `&tags_like=${tag}`;
+
+    if (tag && tag !== "All") {
+      fetchURL += `&tags_like=${tag}`;
+    }
 
     if (subscription && subscription !== "All") {
       fetchURL += `&subscription_like=${
@@ -39,7 +42,9 @@ const useProducts = () => {
       }`;
     }
 
-    if (price !== null) fetchURL += `&price_lte=${price}`;
+    if (price !== null) {
+      fetchURL += `&price_lte=${price}`;
+    }
 
     fetchURL += `&_page=${page || "1"}&_limit=12`;
 
@@ -47,15 +52,11 @@ const useProducts = () => {
   }, [tag, price, subscription, page]);
 
   useEffect(() => {
-    const fetchURL = buildURI();
-    const productsPromise = new Promise<void>((resolve) => {
-      fetch(fetchURL)
-        .then((res) => res.json())
-        .then((data) => {
-          setProducts(data);
-          resolve();
-        });
-    });
+    const fetchURL = buildURL();
+
+    fetch(fetchURL)
+      .then((res) => res.json())
+      .then((data) => setProducts(data));
   }, [tag, price, subscription, page]);
 
   return { products };
