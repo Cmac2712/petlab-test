@@ -1,5 +1,7 @@
 SOLUTION
 ========
+https://codesandbox.io/p/github/Cmac2712/petlab-test/draft/autumn-sunset
+
 I've used URL as state management. This allows the sharing of the page via a link. It also allows to keep the bundle size down.
 
 I've used ChakraUI as a UI library because it has a lot of components and is pretty quick and easy to get running.
@@ -30,4 +32,4 @@ How I would make this solution better:
 - Add jsdoc comments. Consider adding documentation via docusaurs.
 - Abstract UI into a UI library and use Storybook to develop components
 - Profiling with React Dev Tools to better understand rendering issues
-- Use WDYR (https://github.com/welldone-software/why-did-you-render)[https://github.com/welldone-software/why-did-you-render] to improve performarnce by eliminating unecessary rerenders
+- Use WDYR https://github.com/welldone-software/why-did-you-render to improve performarnce by eliminating unecessary rerenders
