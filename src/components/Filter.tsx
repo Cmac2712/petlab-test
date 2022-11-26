@@ -7,8 +7,35 @@ import {
   Stack,
   FormControl,
   FormLabel,
+  Input
 } from "@chakra-ui/react";
 import { useSearchParams } from "react-router-dom";
+
+const SearchInput = () => {
+  const [params, setParams] = useSearchParams();
+  const [search, setSearch] = useState();
+
+  return (
+    <FormControl id="search">
+      <FormLabel>Search</FormLabel>
+      <Input
+        mb={5}
+        placeholder='Search'
+        onChange={(event) => {
+          const value = event.target.value; 
+           setSearch(search);
+
+            setParams({ 
+              q: value,
+              subscription: (params.get("subscription") as Subscription) || "All",
+              price: (params.get("price") as Subscription) || "200",
+              tag: (params.get("tag") as Animal) || "All",
+            });
+        }}
+      />
+      </FormControl>
+  );
+}
 
 const SliderPrice = () => {
   const [params, setParams] = useSearchParams();
@@ -33,6 +60,7 @@ const SliderPrice = () => {
             subscription: (params.get("subscription") as Subscription) || "All",
             price: (e.target as HTMLInputElement).value,
             tag: (params.get("tag") as Animal) || "All",
+            q: (params.get("q") as string) || "",
           });
         }}
       />
@@ -52,6 +80,7 @@ const RadioAnimal = () => {
             subscription: (params.get("subscription") as Subscription) || "All",
             price: (params.get("price") as Subscription) || "200",
             tag: value,
+            q: (params.get("q") as string) || "",
           });
         }}
         value={params.get("tag") as Animal}
@@ -84,6 +113,7 @@ const RadioSubscription = () => {
             subscription: value,
             price: (params.get("price") as string) || "200",
             tag: (params.get("tag") as Animal) || "All",
+            q: (params.get("q") as string) || "",
           })
         }
         value={params.get("subscription") as Subscription}
@@ -107,10 +137,12 @@ const RadioSubscription = () => {
 const Filter = () => {
   return (
     <div>
-      <form>
+      <form onSubmit={e => e.preventDefault()}>
         <Heading as="h2" size="lg" marginBottom={3} noOfLines={1}>
           Filters
         </Heading>
+      <SearchInput 
+      />
         <RadioAnimal />
         <SliderPrice />
         <RadioSubscription />

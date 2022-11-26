@@ -27,6 +27,7 @@ const useProducts = () => {
   const tag = searchParams.get("tag");
   const price = searchParams.get("price");
   const subscription = searchParams.get("subscription");
+  const search = searchParams.get("q");
   const page = searchParams.get("_page");
 
   const buildURL = useCallback(() => {
@@ -46,10 +47,14 @@ const useProducts = () => {
       fetchURL += `&price_lte=${price}`;
     }
 
+    if (search !== null && search !== "") {
+      fetchURL += `&q=${search}`;
+    }
+
     fetchURL += `&_page=${page || "1"}&_limit=12`;
 
     return fetchURL;
-  }, [tag, price, subscription, page]);
+  }, [tag, price, subscription, search, page]);
 
   useEffect(() => {
     const fetchURL = buildURL();
@@ -57,7 +62,7 @@ const useProducts = () => {
     fetch(fetchURL)
       .then((res) => res.json())
       .then((data) => setProducts(data));
-  }, [tag, price, subscription, page]);
+  }, [tag, price, subscription, search, page]);
 
   return { products };
 };
