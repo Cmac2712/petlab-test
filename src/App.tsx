@@ -16,8 +16,21 @@ function App() {
         PetLab Store
       </Text>
       <Flex>
-        <Center position={"fixed"} bottom={0} top={0}>
-          <Box p={16} h={"100%"}>
+        <Center
+          position={{
+            base: "relative",
+            xl: "fixed",
+          }}
+          bottom={0}
+          top={0}
+        >
+          <Box
+            p={{
+              base: 8,
+              xl: 16,
+            }}
+            h={"100%"}
+          >
             <Filter />
           </Box>
         </Center>
